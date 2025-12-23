@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль участника — 150 лет С.В. Рахманинову</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Профиль участника клуба слушателей Рахманинова. Демонстрация клиентской логики: localStorage, экспорт карточки.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-member" data-page="member">
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-mark">R</span>
+            <span class="logo-text">150 лет С.В. Рахманинову</span>
+        </a>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+        </button>
+
+        <nav class="main-nav" aria-label="Главная навигация">
+            <ul class="nav-list" id="navList">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="biography.html" class="nav-link">Биография</a></li>
+                <li><a href="works.html" class="nav-link">Творчество</a></li>
+                <li><a href="media.html" class="nav-link">Медиа</a></li>
+                <li><a href="legacy.html" class="nav-link">Наследие</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌓</button>
+            <div class="member-badge" id="memberBadge" hidden>
+                <a href="member.html" class="member-pill" id="memberPill"></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="section section-page-header">
+        <div class="container">
+            <h1 class="page-title">Профиль участника клуба</h1>
+            <p class="page-subtitle">
+                Данные берутся из localStorage, можно скачать карточку (PNG) или распечатать (PDF).
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container member-layout">
+            <div class="member-panel">
+                <div class="member-state" id="memberState"></div>
+
+                <div class="member-actions" id="memberActions" hidden>
+                    <button class="btn btn-primary" id="downloadCardBtn">Скачать карточку (PNG)</button>
+                    <button class="btn btn-outline" id="printCardBtn">Печать / PDF</button>
+                    <a class="btn btn-outline" href="legacy.html">Изменить данные (в клубе)</a>
+                    <button class="btn btn-outline" id="deleteMemberBtn">Удалить данные</button>
+                </div>
+            </div>
+
+            <div class="member-preview-wrap">
+                <div class="member-preview" id="memberPreview" hidden>
+                    <div class="club-card" id="clubCard">
+                        <div class="club-card-top">
+                            <div class="club-card-title">
+                                <div class="club-card-badge">R</div>
+                                <div>
+                                    <div class="club-card-name">Клуб слушателей Рахманинова</div>
+                                    <div class="club-card-sub">Учебная карточка участника</div>
+                                </div>
+                            </div>
+                            <div class="club-card-id" id="profileId"></div>
+                        </div>
+
+                        <div class="club-card-body">
+                            <div class="club-row">
+                                <span class="club-label">Имя</span>
+                                <span class="club-value" id="profileName"></span>
+                            </div>
+                            <div class="club-row">
+                                <span class="club-label">Email</span>
+                                <span class="club-value" id="profileEmail"></span>
+                            </div>
+                            <div class="club-row">
+                                <span class="club-label">Уровень</span>
+                                <span class="club-value" id="profileTier"></span>
+                            </div>
+                            <div class="club-row">
+                                <span class="club-label">Дата</span>
+                                <span class="club-value" id="profileDate"></span>
+                            </div>
+                        </div>
+
+                        <div class="club-card-footer">
+                            <span>150 лет С.В. Рахманинову</span>
+                            <span>localStorage • demo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="member-hint-2">
+                    Примечание: экспорт PNG создаётся клиентским JavaScript (canvas).
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <p>© 2025. Учебный интернет-ресурс к 150-летию С.В. Рахманинова.</p>
+        <p class="footer-meta">
+            Клиентская часть. HTML5, CSS3, JavaScript. Разработано в рамках курсового проектирования студентом Лапшин Мстислав
+        </p>
+    </div>
+</footer>
+
+<button id="scrollTopBtn" class="scroll-top" aria-label="Прокрутить наверх">↑</button>
+<script src="js/script.js"></script>
+</body>
+</html>

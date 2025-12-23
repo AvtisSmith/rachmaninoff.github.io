@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Наследие и викторина — 150 лет С.В. Рахманинову</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Наследие С.В. Рахманинова и интерактивная викторина по материалам сайта.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-legacy" data-page="legacy">
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-mark">R</span>
+            <span class="logo-text">150 лет С.В. Рахманинову</span>
+        </a>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+        </button>
+
+        <nav class="main-nav" aria-label="Главная навигация">
+            <ul class="nav-list" id="navList">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="biography.html" class="nav-link">Биография</a></li>
+                <li><a href="works.html" class="nav-link">Творчество</a></li>
+                <li><a href="media.html" class="nav-link">Медиа</a></li>
+                <li><a href="legacy.html" class="nav-link active">Наследие</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌓</button>
+            <div class="member-badge" id="memberBadge" hidden>
+                <a href="member.html" class="member-pill" id="memberPill"></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="section section-page-header">
+        <div class="container">
+            <h1 class="page-title">Наследие и викторина</h1>
+            <p class="page-subtitle">Клуб — демонстрация клиентской логики. Профиль участника — на отдельной странице.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container two-columns">
+            <article class="column-main">
+                <h2>Наследие композитора</h2>
+                <p>
+                    Музыка Рахманинова продолжает звучать на крупнейших сценах мира. Его концерты и симфонии входят
+                    в репертуар ведущих оркестров и солистов, а записи помогают по-новому раскрыть богатство и глубину его творчества.
+                </p>
+                <p>
+                    Влияние композитора заметно в академической музыке, кино, современной аранжировке и исполнительской культуре.
+                    Многие пианисты воспринимают его концерты как “вершины профессии”.
+                </p>
+
+                <h2>Клуб слушателей Рахманинова</h2>
+                <p>
+                    Это учебная имитация: данные проверяются, сохраняются в браузере (localStorage) и затем доступны на странице профиля.
+                    <strong>Имя обязательно</strong>, чтобы было видно корректное заполнение анкеты.
+                </p>
+
+                <form class="feedback-form" id="clubForm" novalidate>
+                    <div class="form-group">
+                        <label for="clubName">Имя (обязательно)</label>
+                        <input type="text" id="clubName" name="clubName" placeholder="Например: Мстислав" required>
+                        <p class="form-error" data-error-for="clubName"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clubEmail">Email (обязательно)</label>
+                        <input type="text" id="clubEmail" name="clubEmail" placeholder="name@example.com" required>
+                        <p class="form-error" data-error-for="clubEmail"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clubTier">Уровень участия (обязательно)</label>
+                        <select id="clubTier" name="clubTier" required>
+                            <option value="">Выберите вариант</option>
+                            <option value="listener">Слушатель (получать подборки)</option>
+                            <option value="researcher">Исследователь (факты и материалы)</option>
+                            <option value="volunteer">Волонтёр (помощь в мероприятиях)</option>
+                        </select>
+                        <p class="form-error" data-error-for="clubTier"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clubNote">Коротко: почему хотите вступить?</label>
+                        <textarea id="clubNote" name="clubNote" rows="3" placeholder="1–2 предложения (необязательно)"></textarea>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <label class="check-label">
+                            <input type="checkbox" id="clubAgree" name="clubAgree" required>
+                            Я согласен(на) на обработку данных в учебных целях (локально в браузере)
+                        </label>
+                        <p class="form-error" data-error-for="clubAgree"></p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="clubSubmitBtn">Вступить в клуб</button>
+                        <button type="button" class="btn btn-outline" id="clubEditBtn">Изменить данные</button>
+                        <a href="member.html" class="btn btn-outline">Открыть профиль</a>
+                        <button type="button" class="btn btn-outline" id="clubClearBtn">Сбросить участие</button>
+                    </div>
+
+                    <p class="form-success" id="clubSuccess"></p>
+                </form>
+
+                <div class="member-card" id="memberCard" hidden>
+                    <h3>Карточка участника (кратко)</h3>
+                    <p class="member-row"><span class="member-label">ID:</span> <span id="memberId"></span></p>
+                    <p class="member-row"><span class="member-label">Имя:</span> <span id="memberName"></span></p>
+                    <p class="member-row"><span class="member-label">Email:</span> <span id="memberEmail"></span></p>
+                    <p class="member-row"><span class="member-label">Уровень:</span> <span id="memberTier"></span></p>
+                    <p class="member-row"><span class="member-label">Дата:</span> <span id="memberDate"></span></p>
+                    <p class="member-hint">
+                        Полная карточка + скачивание доступны на странице профиля.
+                    </p>
+                    <a class="link-button" href="member.html">Перейти в профиль участника</a>
+                </div>
+            </article>
+
+            <aside class="column-aside">
+                <div class="quiz-card" id="quiz" data-role="quiz">
+                    <h2>Мини-викторина</h2>
+                    <p class="quiz-intro">Ответь на несколько вопросов по материалам сайта.</p>
+
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="quizProgressBar"></div>
+                    </div>
+
+                    <div class="quiz-question" id="quizQuestion"></div>
+                    <div class="quiz-options" id="quizOptions"></div>
+
+                    <button class="btn btn-small" id="quizNextBtn" disabled>Далее</button>
+                    <p class="quiz-result" id="quizResult"></p>
+                </div>
+            </aside>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <p>© 2025. Учебный интернет-ресурс к 150-летию С.В. Рахманинова.</p>
+        <p class="footer-meta">
+            Клиентская часть. HTML5, CSS3, JavaScript. Разработано в рамках курсового проектирования студентом Лапшин Мстислав
+        </p>
+    </div>
+</footer>
+
+<button id="scrollTopBtn" class="scroll-top" aria-label="Прокрутить наверх">↑</button>
+<script src="js/script.js"></script>
+</body>
+</html>

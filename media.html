@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Медиа — 150 лет С.В. Рахманинову</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Медиа-материалы, связанные с С.В. Рахманиновым: афиши, рукописи, концерты.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-media" data-page="media">
+<header class="site-header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-mark">R</span>
+            <span class="logo-text">150 лет С.В. Рахманинову</span>
+        </a>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+        </button>
+
+        <nav class="main-nav" aria-label="Главная навигация">
+            <ul class="nav-list" id="navList">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="biography.html" class="nav-link">Биография</a></li>
+                <li><a href="works.html" class="nav-link">Творчество</a></li>
+                <li><a href="media.html" class="nav-link active">Медиа</a></li>
+                <li><a href="legacy.html" class="nav-link">Наследие</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌓</button>
+            <div class="member-badge" id="memberBadge" hidden>
+                <a href="member.html" class="member-pill" id="memberPill"></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="section section-page-header">
+        <div class="container">
+            <h1 class="page-title">Медиа-материалы</h1>
+            <p class="page-subtitle">Нажми на изображение, чтобы открыть его в модальном окне.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="gallery-grid" data-role="gallery">
+                <figure class="gallery-item">
+                    <img src="img/concert-hall.jpg" alt="Концертный зал" data-full="img/concert-hall.jpg">
+                    <figcaption>Концертный зал, где исполнялись произведения Рахманинова</figcaption>
+                </figure>
+
+                <figure class="gallery-item">
+                    <img src="img/piano-concerto.jpg" alt="Фортепиано" data-full="img/piano-concerto.jpg">
+                    <figcaption>Фортепиано как символ его исполнительской и композиторской жизни</figcaption>
+                </figure>
+
+                <figure class="gallery-item">
+                    <img src="img/manuscripts.jpg" alt="Рукописи" data-full="img/manuscripts.jpg">
+                    <figcaption>Рукописные ноты и наброски</figcaption>
+                </figure>
+
+                <figure class="gallery-item">
+                    <img src="img/poster-anniversary.jpg" alt="Юбилейный плакат" data-full="img/poster-anniversary.jpg">
+                    <figcaption>Современная афиша к юбилею композитора</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-note">
+        <div class="container">
+            <h2>Совет</h2>
+            <p>
+                Добавь 2–3 собственных изображения (фото, афиши, страницы нот) — это отлично демонстрирует работу с контентом и адаптивной сеткой.
+            </p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <p>© 2025. Учебный интернет-ресурс к 150-летию С.В. Рахманинова.</p>
+        <p class="footer-meta">
+            Клиентская часть. HTML5, CSS3, JavaScript. Разработано в рамках курсового проектирования студентом Лапшин Мстислав
+        </p>
+    </div>
+</footer>
+
+<div class="modal" id="imageModal" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Просмотр изображения">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+        <img src="" alt="" id="modalImage">
+        <p id="modalCaption" class="modal-caption"></p>
+    </div>
+</div>
+
+<button id="scrollTopBtn" class="scroll-top" aria-label="Прокрутить наверх">↑</button>
+<script src="js/script.js"></script>
+</body>
+</html>
