@@ -1,659 +1,505 @@
+"use strict";
+
+document.documentElement.classList.add("js");
+
+const STORAGE_KEYS = {
+    theme: "rachmaninov-theme",
+    favorites: "rachmaninov-route"
+};
+
+const WORKS = [
+    { id: "aleko", title: "«Алеко»", year: "1892", genre: "Опера", opus: "без номера опуса" },
+    { id: "prelude", title: "Прелюдия до-диез минор", year: "1892", genre: "Фортепиано", opus: "op. 3 № 2" },
+    { id: "symphony-1", title: "Симфония № 1 ре минор", year: "1895", genre: "Симфония", opus: "op. 13" },
+    { id: "concerto-2", title: "Концерт для фортепиано № 2 до минор", year: "1900–1901", genre: "Концерт", opus: "op. 18" },
+    { id: "symphony-2", title: "Симфония № 2 ми минор", year: "1906–1907", genre: "Симфония", opus: "op. 27" },
+    { id: "concerto-3", title: "Концерт для фортепиано № 3 ре минор", year: "1909", genre: "Концерт", opus: "op. 30" },
+    { id: "bells", title: "«Колокола»", year: "1913", genre: "Хор и оркестр", opus: "op. 35" },
+    { id: "vespers", title: "«Всенощное бдение»", year: "1915", genre: "Хор a cappella", opus: "op. 37" },
+    { id: "rhapsody", title: "Рапсодия на тему Паганини", year: "1934", genre: "Фортепиано с оркестром", opus: "op. 43" },
+    { id: "symphonic-dances", title: "«Симфонические танцы»", year: "1940", genre: "Оркестр", opus: "op. 45" }
+];
+
+const QUIZ = [
+    {
+        question: "Когда родился Сергей Рахманинов по новому стилю?",
+        options: ["1 апреля 1873 года", "2 апреля 1874 года", "20 марта 1875 года"],
+        answer: 0,
+        explanation: "1 апреля 1873 года — дата по новому стилю; 20 марта — по старому стилю."
+    },
+    {
+        question: "Какое произведение стало важной вехой творческого возвращения после кризиса?",
+        options: ["Симфонические танцы", "Второй фортепианный концерт", "Опера «Алеко»"],
+        answer: 1,
+        explanation: "Полное исполнение Второго фортепианного концерта в 1901 году обозначило выход из длительного творческого кризиса."
+    },
+    {
+        question: "Для какого события был создан Третий фортепианный концерт?",
+        options: ["Для первых гастролей в США", "Для выпускного экзамена", "Для работы в Большом театре"],
+        answer: 0,
+        explanation: "Концерт был написан к американскому турне 1909 года и впервые прозвучал в Нью-Йорке."
+    },
+    {
+        question: "В каком году Рахманинов покинул Россию?",
+        options: ["1909", "1917", "1918"],
+        answer: 1,
+        explanation: "Он выехал из России в декабре 1917 года; в США семья прибыла в конце 1918 года."
+    },
+    {
+        question: "Как называется последнее крупное сочинение Рахманинова?",
+        options: ["«Колокола»", "Третья симфония", "«Симфонические танцы»"],
+        answer: 2,
+        explanation: "«Симфонические танцы», op. 45, завершены в 1940 году."
+    }
+];
+
 document.addEventListener("DOMContentLoaded", () => {
-    const page = document.body.dataset.page;
-
-    setupNavigation();
-    setupThemeToggle();
+    setupTheme();
+    setupMenu();
     setupScrollTop();
-
-    setupMembershipBadge();
-
-    if (page === "home") setupQuotesWidget();
-    if (page === "works") setupWorksFilter();
-    if (page === "media") setupGalleryModal();
-    if (page === "legacy") {
-        setupQuiz();
-        setupClubForm();
-    }
-    if (page === "member") {
-        setupMemberPage();
-    }
+    setupReveals();
+    updateFavoriteInterface();
+    setupFavoriteButtons();
+    setupWorksCatalog();
+    setupEraTabs();
+    setupGallery();
+    setupQuiz();
+    setupRoute();
 });
 
-/* ---------- CONSTANTS ---------- */
-const CLUB_STORAGE_KEY = "rahmaninov-club-member";
-
-/* ---------- NAV ---------- */
-function setupNavigation() {
-    const navToggle = document.getElementById("navToggle");
-    const navList = document.getElementById("navList");
-    if (!navToggle || !navList) return;
-
-    navToggle.addEventListener("click", () => {
-        const isOpen = document.body.classList.toggle("nav-open");
-        navToggle.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    navList.addEventListener("click", (event) => {
-        const target = event.target;
-        if (target instanceof HTMLElement && target.matches("a.nav-link")) {
-            document.body.classList.remove("nav-open");
-            navToggle.setAttribute("aria-expanded", "false");
-        }
-    });
-}
-
-/* ---------- THEME ---------- */
-function setupThemeToggle() {
-    const themeToggle = document.getElementById("themeToggle");
-    if (!themeToggle) return;
-
-    const THEME_KEY = "rahmaninov-theme";
-    const savedTheme = localStorage.getItem(THEME_KEY);
-
-    if (savedTheme === "light") {
-        document.body.classList.add("theme-light");
+window.addEventListener("storage", (event) => {
+    if (event.key === STORAGE_KEYS.favorites) {
+        updateFavoriteInterface();
+        renderRoute();
     }
+    if (event.key === STORAGE_KEYS.theme) applyTheme(event.newValue === "dark" ? "dark" : "light", false);
+});
 
-    themeToggle.addEventListener("click", () => {
-        const isLight = document.body.classList.toggle("theme-light");
-        localStorage.setItem(THEME_KEY, isLight ? "light" : "dark");
-    });
-}
-
-/* ---------- SCROLL TOP ---------- */
-function setupScrollTop() {
-    const btn = document.getElementById("scrollTopBtn");
-    if (!btn) return;
-
-    window.addEventListener("scroll", () => {
-        const visible = window.scrollY > 300;
-        btn.dataset.visible = visible ? "true" : "false";
-    });
-
-    btn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-}
-
-/* ---------- MEMBERSHIP BADGE ---------- */
-function setupMembershipBadge() {
-    const badge = document.getElementById("memberBadge");
-    const pill = document.getElementById("memberPill");
-    if (!badge || !pill) return;
-
-    const data = safeReadMember();
-    if (!data) {
-        badge.hidden = true;
-        pill.textContent = "";
-        return;
-    }
-
-    badge.hidden = false;
-    pill.textContent = `Участник: ${data.memberId}`;
-}
-
-/* ---------- HELPERS ---------- */
-function safeReadMember() {
-    const raw = localStorage.getItem(CLUB_STORAGE_KEY);
-    if (!raw) return null;
+function readStorage(key) {
     try {
-        const data = JSON.parse(raw);
-        if (!data?.memberId || !data?.email || !data?.tier || !data?.createdAt || !data?.name) return null;
-        return data;
-    } catch {
+        return window.localStorage.getItem(key);
+    } catch (_error) {
         return null;
     }
 }
 
-function tierToText(value) {
-    if (value === "listener") return "Слушатель";
-    if (value === "researcher") return "Исследователь";
-    if (value === "volunteer") return "Волонтёр";
-    return value || "";
-}
-
-function setButtonText(btn, text) {
-    if (btn) btn.textContent = text;
-}
-
-/* ---------- QUOTES ---------- */
-function setupQuotesWidget() {
-    const quotes = [
-        "«Музыка должна течь из сердца и обращаться к сердцу.»",
-        "«Для меня музыка — это исповедь души.»",
-        "«Я пишу музыку так, как её слышу, и не могу иначе.»"
-    ];
-
-    const quoteText = document.getElementById("quoteText");
-    const quoteCounter = document.getElementById("quoteCounter");
-    const prevBtn = document.getElementById("prevQuote");
-    const nextBtn = document.getElementById("nextQuote");
-
-    if (!quoteText || !quoteCounter || !prevBtn || !nextBtn) return;
-
-    let currentIndex = 0;
-
-    function render() {
-        quoteText.textContent = quotes[currentIndex];
-        quoteCounter.textContent = `${currentIndex + 1} / ${quotes.length}`;
+function writeStorage(key, value) {
+    try {
+        window.localStorage.setItem(key, value);
+        return true;
+    } catch (_error) {
+        return false;
     }
-
-    prevBtn.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + quotes.length) % quotes.length;
-        render();
-    });
-
-    nextBtn.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % quotes.length;
-        render();
-    });
-
-    render();
 }
 
-/* ---------- WORKS FILTER ---------- */
-function setupWorksFilter() {
-    const filterContainer = document.querySelector("[data-role='works-filter']");
-    const cards = Array.from(document.querySelectorAll(".work-card"));
-    if (!filterContainer || cards.length === 0) return;
+function getFavorites() {
+    const known = new Set(WORKS.map((work) => work.id));
+    try {
+        const value = JSON.parse(readStorage(STORAGE_KEYS.favorites) || "[]");
+        if (!Array.isArray(value)) return [];
+        return [...new Set(value.filter((id) => typeof id === "string" && known.has(id)))];
+    } catch (_error) {
+        return [];
+    }
+}
 
-    filterContainer.addEventListener("click", (event) => {
-        const target = event.target;
-        if (!(target instanceof HTMLElement)) return;
-        if (!target.matches("[data-filter]")) return;
+function setFavorites(favorites) {
+    writeStorage(STORAGE_KEYS.favorites, JSON.stringify(favorites));
+    updateFavoriteInterface();
+    renderRoute();
+}
 
-        const filterValue = target.dataset.filter || "all";
+function pluralizeWorks(count) {
+    const remainder100 = count % 100;
+    const remainder10 = count % 10;
+    if (remainder100 >= 11 && remainder100 <= 14) return "произведений";
+    if (remainder10 === 1) return "произведение";
+    if (remainder10 >= 2 && remainder10 <= 4) return "произведения";
+    return "произведений";
+}
 
-        filterContainer.querySelectorAll(".btn-filter").forEach((btn) => {
-            btn.classList.toggle("active", btn === target);
-        });
-
-        cards.forEach((card) => {
-            const category = card.getAttribute("data-category");
-            const visible = filterValue === "all" || category === filterValue;
-            card.style.display = visible ? "" : "none";
+function setupTheme() {
+    applyTheme(readStorage(STORAGE_KEYS.theme) === "dark" ? "dark" : "light", false);
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+            applyTheme(next, true);
         });
     });
 }
 
-/* ---------- GALLERY MODAL ---------- */
-function setupGalleryModal() {
-    const gallery = document.querySelector("[data-role='gallery']");
-    const modal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
-    const modalCaption = document.getElementById("modalCaption");
-    const modalClose = document.getElementById("modalClose");
-    const modalBackdrop = document.getElementById("modalBackdrop");
+function applyTheme(theme, persist) {
+    const isDark = theme === "dark";
+    document.documentElement.dataset.theme = isDark ? "dark" : "light";
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+        button.setAttribute("aria-pressed", String(isDark));
+        const label = button.querySelector("[data-theme-label]");
+        const icon = button.querySelector("[data-theme-icon]");
+        if (label) label.textContent = isDark ? "Включить светлую тему" : "Включить тёмную тему";
+        if (icon) icon.textContent = isDark ? "☀" : "◐";
+    });
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", isDark ? "#171612" : "#f3eee3");
+    if (persist) writeStorage(STORAGE_KEYS.theme, isDark ? "dark" : "light");
+}
 
-    if (!gallery || !modal || !modalImage || !modalCaption || !modalClose || !modalBackdrop) return;
+function setupMenu() {
+    const button = document.querySelector("[data-menu-toggle]");
+    const nav = document.querySelector("[data-site-nav]");
+    if (!button || !nav) return;
+    const media = window.matchMedia("(max-width: 920px)");
 
-    function openModal(src, caption) {
-        modalImage.src = src;
-        modalImage.alt = caption || "Изображение";
-        modalCaption.textContent = caption || "";
-        modal.dataset.open = "true";
-        modal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-        modalClose.focus();
-    }
+    const close = (restoreFocus = false) => {
+        button.setAttribute("aria-expanded", "false");
+        const label = button.querySelector("[data-menu-label]");
+        if (label) label.textContent = "Меню";
+        if (media.matches) {
+            nav.hidden = true;
+            nav.setAttribute("aria-hidden", "true");
+            nav.inert = true;
+        }
+        if (restoreFocus) button.focus();
+    };
 
-    function closeModal() {
-        modal.dataset.open = "false";
-        modal.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-    }
+    const sync = () => {
+        if (media.matches) close(false);
+        else {
+            nav.hidden = false;
+            nav.removeAttribute("aria-hidden");
+            nav.inert = false;
+            button.setAttribute("aria-expanded", "false");
+        }
+    };
 
-    gallery.addEventListener("click", (event) => {
-        const target = event.target;
-        if (!(target instanceof HTMLImageElement)) return;
-        const full = target.dataset.full || target.src;
-        const caption = target.closest("figure")?.querySelector("figcaption")?.textContent || "";
-        openModal(full, caption);
+    button.addEventListener("click", () => {
+        const open = button.getAttribute("aria-expanded") !== "true";
+        button.setAttribute("aria-expanded", String(open));
+        const label = button.querySelector("[data-menu-label]");
+        if (label) label.textContent = open ? "Закрыть" : "Меню";
+        nav.hidden = !open;
+        nav.inert = !open;
+        if (open) nav.removeAttribute("aria-hidden");
+        else nav.setAttribute("aria-hidden", "true");
     });
 
-    modalClose.addEventListener("click", closeModal);
-    modalBackdrop.addEventListener("click", closeModal);
-
+    nav.addEventListener("click", (event) => {
+        if (media.matches && event.target.closest("a")) close(false);
+    });
     document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && modal.dataset.open === "true") {
-            closeModal();
-        }
+        if (event.key === "Escape" && button.getAttribute("aria-expanded") === "true") close(true);
     });
+    document.addEventListener("click", (event) => {
+        if (media.matches && button.getAttribute("aria-expanded") === "true" && !nav.contains(event.target) && !button.contains(event.target)) close(false);
+    });
+    if (typeof media.addEventListener === "function") media.addEventListener("change", sync);
+    else media.addListener(sync);
+    sync();
 }
 
-/* ---------- QUIZ (FIXED: no auto-next, show correct answer) ---------- */
-function setupQuiz() {
-    const quizRoot = document.querySelector("[data-role='quiz']");
-    if (!quizRoot) return;
-
-    const questionEl = document.getElementById("quizQuestion");
-    const optionsEl = document.getElementById("quizOptions");
-    const nextBtn = document.getElementById("quizNextBtn");
-    const resultEl = document.getElementById("quizResult");
-    const progressBar = document.getElementById("quizProgressBar");
-
-    if (!questionEl || !optionsEl || !nextBtn || !resultEl || !progressBar) return;
-
-    const questions = [
-        { text: "В каком году родился Сергей Рахманинов?", options: ["1873", "1890", "1917"], correctIndex: 0 },
-        { text: "Какой инструмент был центральным в его творчестве?", options: ["Скрипка", "Фортепиано", "Орган"], correctIndex: 1 },
-        { text: "«Всенощное бдение» относится к жанру…", options: ["Симфония", "Духовная хоровая музыка", "Фортепианный концерт"], correctIndex: 1 }
-    ];
-
-    let current = 0;
-    let answered = false;
-    let selectedIndex = null;
-    let correctCount = 0;
-
-    function render() {
-        const q = questions[current];
-        answered = false;
-        selectedIndex = null;
-
-        questionEl.textContent = q.text;
-        optionsEl.innerHTML = "";
-        resultEl.textContent = "";
-        nextBtn.disabled = true;
-        nextBtn.textContent = current === questions.length - 1 ? "Завершить" : "Далее";
-
-        progressBar.style.width = `${(current / questions.length) * 100}%`;
-
-        q.options.forEach((opt, index) => {
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.className = "quiz-option";
-            btn.textContent = opt;
-
-            btn.addEventListener("click", () => {
-                if (answered) return; // после ответа нельзя менять
-                selectedIndex = index;
-                answered = true;
-
-                // отключить все кнопки
-                const allBtns = Array.from(optionsEl.querySelectorAll(".quiz-option"));
-                allBtns.forEach(b => b.disabled = true);
-
-                // пометки
-                const correctBtn = allBtns[q.correctIndex];
-                if (correctBtn) correctBtn.dataset.correct = "true";
-
-                const chosenBtn = allBtns[index];
-                if (index !== q.correctIndex && chosenBtn) chosenBtn.dataset.wrong = "true";
-
-                if (index === q.correctIndex) {
-                    correctCount++;
-                    resultEl.textContent = `Верно! Правильный ответ: «${q.options[q.correctIndex]}».`;
-                } else {
-                    resultEl.textContent = `Неверно. Правильный ответ: «${q.options[q.correctIndex]}».`;
-                }
-
-                nextBtn.disabled = false; // теперь можно нажимать Далее
-            });
-
-            optionsEl.appendChild(btn);
-        });
-    }
-
-    nextBtn.addEventListener("click", () => {
-        if (!answered) return;
-
-        current++;
-
-        if (current < questions.length) {
-            render();
-            return;
-        }
-
-        // финал
-        progressBar.style.width = "100%";
-        questionEl.textContent = "Викторина завершена!";
-        optionsEl.innerHTML = "";
-        nextBtn.disabled = true;
-        resultEl.textContent = `Правильных ответов: ${correctCount} из ${questions.length}.`;
+function setupScrollTop() {
+    const button = document.querySelector("[data-scroll-top]");
+    if (!button) return;
+    const update = () => { button.dataset.visible = String(window.scrollY > 600); };
+    window.addEventListener("scroll", update, { passive: true });
+    button.addEventListener("click", () => {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
     });
-
-    render();
+    update();
 }
 
-/* ---------- CLUB FORM (FIXED: required name + edit mode) ---------- */
-function setupClubForm() {
-    const form = document.getElementById("clubForm");
-    const successEl = document.getElementById("clubSuccess");
-    const clearBtn = document.getElementById("clubClearBtn");
-    const editBtn = document.getElementById("clubEditBtn");
-    const submitBtn = document.getElementById("clubSubmitBtn");
+function setupReveals() {
+    const items = [...document.querySelectorAll(".reveal")];
+    if (!items.length) return;
 
-    const card = document.getElementById("memberCard");
-    const cardId = document.getElementById("memberId");
-    const cardName = document.getElementById("memberName");
-    const cardEmail = document.getElementById("memberEmail");
-    const cardTier = document.getElementById("memberTier");
-    const cardDate = document.getElementById("memberDate");
-
-    if (!form || !successEl || !clearBtn || !editBtn || !submitBtn) return;
-    if (!card || !cardId || !cardName || !cardEmail || !cardTier || !cardDate) return;
-
-    // режим редактирования: false = "вступление", true = "изменение"
-    let isEditMode = false;
-
-    function setError(fieldName, text) {
-        const el = form.querySelector(`[data-error-for='${fieldName}']`);
-        if (el) el.textContent = text || "";
-    }
-
-    function clearAllErrors() {
-        setError("clubName", "");
-        setError("clubEmail", "");
-        setError("clubTier", "");
-        setError("clubAgree", "");
-    }
-
-    function showMemberCard(data) {
-        card.hidden = false;
-        cardId.textContent = data.memberId;
-        cardName.textContent = data.name;
-        cardEmail.textContent = data.email;
-        cardTier.textContent = tierToText(data.tier);
-        cardDate.textContent = new Date(data.createdAt).toLocaleString();
-    }
-
-    function hideMemberCard() {
-        card.hidden = true;
-        cardId.textContent = "";
-        cardName.textContent = "";
-        cardEmail.textContent = "";
-        cardTier.textContent = "";
-        cardDate.textContent = "";
-    }
-
-    function fillFormFromMember(data) {
-        form.clubName.value = data.name || "";
-        form.clubEmail.value = data.email || "";
-        form.clubTier.value = data.tier || "";
-        form.clubNote.value = data.note || "";
-        form.clubAgree.checked = true; // раз уже был участник, логично поставить
-    }
-
-    function setMode(editMode, memberExists) {
-        isEditMode = editMode;
-
-        if (!memberExists) {
-            // редактировать нечего
-            isEditMode = false;
-        }
-
-        if (isEditMode) {
-            setButtonText(submitBtn, "Сохранить изменения");
-            successEl.textContent = "Режим редактирования: внеси изменения и нажми «Сохранить изменения».";
-        } else {
-            setButtonText(submitBtn, "Вступить в клуб");
-            // successEl оставим как есть (не затираем)
-        }
-    }
-
-    // восстановление
-    const saved = safeReadMember();
-    if (saved) {
-        showMemberCard(saved);
-        fillFormFromMember(saved);
-        successEl.textContent = "Вы уже состоите в клубе — данные восстановлены из localStorage. Можно нажать «Изменить данные».";
-        setMode(false, true);
-    } else {
-        hideMemberCard();
-        setMode(false, false);
-    }
-
-    editBtn.addEventListener("click", () => {
-        const currentSaved = safeReadMember();
-        if (!currentSaved) {
-            successEl.textContent = "Сначала вступите в клуб, чтобы можно было изменять данные.";
-            return;
-        }
-
-        // переключаем режим
-        if (!isEditMode) {
-            fillFormFromMember(currentSaved);
-            clearAllErrors();
-            setMode(true, true);
-        } else {
-            setMode(false, true);
-            successEl.textContent = "Редактирование отменено.";
-        }
-    });
-
-    clearBtn.addEventListener("click", () => {
-        localStorage.removeItem(CLUB_STORAGE_KEY);
-        form.reset();
-        clearAllErrors();
-        successEl.textContent = "Участие сброшено (данные удалены из localStorage).";
-        hideMemberCard();
-        setMode(false, false);
-        setupMembershipBadge();
-    });
-
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        clearAllErrors();
-        successEl.textContent = "";
-
-        const name = form.clubName.value.trim();
-        const email = form.clubEmail.value.trim();
-        const tier = form.clubTier.value;
-        const note = form.clubNote.value.trim();
-        const agree = form.clubAgree.checked;
-
-        if (!name) {
-            setError("clubName", "Введите имя (обязательно).");
-            return;
-        }
-
-        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        if (!email || !emailOk) {
-            setError("clubEmail", "Введите корректный Email (например: name@example.com).");
-            return;
-        }
-        if (!tier) {
-            setError("clubTier", "Пожалуйста, выберите уровень участия.");
-            return;
-        }
-        if (!agree) {
-            setError("clubAgree", "Для вступления нужно согласие на обработку данных (учебная имитация).");
-            return;
-        }
-
-        const existing = safeReadMember();
-
-        // если редактируем и есть участник — сохраняем ID и createdAt
-        let memberId;
-        let createdAt;
-
-        if (isEditMode && existing) {
-            memberId = existing.memberId;
-            createdAt = existing.createdAt;
-        } else {
-            memberId = `R150-${Math.floor(100000 + Math.random() * 900000)}`;
-            createdAt = Date.now();
-        }
-
-        const payload = { memberId, name, email, tier, note, createdAt };
-
-        localStorage.setItem(CLUB_STORAGE_KEY, JSON.stringify(payload));
-
-        if (isEditMode && existing) {
-            successEl.textContent = "Изменения сохранены! Ваш ID остался прежним.";
-            setMode(false, true);
-        } else {
-            successEl.textContent = "Готово! Вы вступили в клуб. Карточка участника создана ниже.";
-        }
-
-        showMemberCard(payload);
-        setupMembershipBadge();
-    });
-}
-
-/* ---------- MEMBER PAGE ---------- */
-function setupMemberPage() {
-    const stateEl = document.getElementById("memberState");
-    const actionsEl = document.getElementById("memberActions");
-    const previewWrap = document.getElementById("memberPreview");
-
-    const profileId = document.getElementById("profileId");
-    const profileEmail = document.getElementById("profileEmail");
-    const profileTier = document.getElementById("profileTier");
-    const profileName = document.getElementById("profileName");
-    const profileDate = document.getElementById("profileDate");
-
-    const downloadBtn = document.getElementById("downloadCardBtn");
-    const printBtn = document.getElementById("printCardBtn");
-    const deleteBtn = document.getElementById("deleteMemberBtn");
-
-    if (!stateEl || !actionsEl || !previewWrap) return;
-
-    const data = safeReadMember();
-
-    if (!data) {
-        stateEl.innerHTML = `
-            <p><strong>Профиль не найден.</strong></p>
-            <p>Сначала вступи в клуб на странице «Наследие», чтобы появились данные.</p>
-            <a class="btn btn-primary" href="legacy.html">Перейти к вступлению</a>
-        `;
-        actionsEl.hidden = true;
-        previewWrap.hidden = true;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+        items.forEach((item) => { item.dataset.revealed = "true"; });
         return;
     }
 
-    stateEl.innerHTML = `
-        <p><strong>Профиль загружен.</strong></p>
-        <p>ID участника: <span style="color: var(--color-text); font-weight: 600;">${data.memberId}</span></p>
-        <p style="margin-bottom: 0;">Можно скачать карточку или распечатать её как PDF.</p>
-    `;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.dataset.revealed = "true";
+            observer.unobserve(entry.target);
+        });
+    }, { rootMargin: "0px 0px -8%", threshold: 0.05 });
+    items.forEach((item) => observer.observe(item));
+}
 
-    profileId.textContent = data.memberId;
-    profileEmail.textContent = data.email;
-    profileTier.textContent = tierToText(data.tier);
-    profileName.textContent = data.name;
-    profileDate.textContent = new Date(data.createdAt).toLocaleString();
+function updateFavoriteInterface() {
+    const favorites = getFavorites();
+    const favoriteSet = new Set(favorites);
+    document.querySelectorAll("[data-favorites-count]").forEach((counter) => {
+        counter.textContent = String(favorites.length);
+        counter.setAttribute("aria-label", `${favorites.length} ${pluralizeWorks(favorites.length)} в маршруте`);
+    });
+    document.querySelectorAll("[data-favorite-button]").forEach((button) => {
+        const selected = favoriteSet.has(button.dataset.favoriteButton);
+        button.setAttribute("aria-pressed", String(selected));
+        const parts = button.querySelectorAll("span");
+        if (parts[0]) parts[0].textContent = selected ? "★" : "☆";
+        if (parts[1]) parts[1].textContent = selected ? "В маршруте" : "В маршрут";
+        const work = WORKS.find((item) => item.id === button.dataset.favoriteButton);
+        if (work) button.setAttribute("aria-label", `${selected ? "Удалить из маршрута" : "Добавить в маршрут"}: ${work.title}`);
+    });
+}
 
-    actionsEl.hidden = false;
-    previewWrap.hidden = false;
+function setupFavoriteButtons() {
+    document.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-favorite-button]");
+        if (!button) return;
+        const id = button.dataset.favoriteButton;
+        const favorites = getFavorites();
+        setFavorites(favorites.includes(id) ? favorites.filter((item) => item !== id) : [...favorites, id]);
+    });
+}
 
-    downloadBtn?.addEventListener("click", () => {
-        exportMemberCardAsPNG({
-            memberId: data.memberId,
-            name: data.name,
-            email: data.email,
-            tier: tierToText(data.tier),
-            date: new Date(data.createdAt).toLocaleString()
+function setupWorksCatalog() {
+    const form = document.querySelector("[data-works-controls]");
+    const grid = document.querySelector("[data-works-grid]");
+    if (!form || !grid) return;
+    const search = form.querySelector("[data-work-search]");
+    const genre = form.querySelector("[data-work-genre]");
+    const sort = form.querySelector("[data-work-sort]");
+    const status = document.querySelector("[data-works-status]");
+    const empty = document.querySelector("[data-works-empty]");
+    const cards = [...grid.querySelectorAll("[data-work-card]")];
+    const normalize = (value) => value.toLocaleLowerCase("ru").replace(/ё/g, "е").trim();
+
+    const update = () => {
+        const query = normalize(search.value);
+        const selectedGenre = genre.value;
+        let visible = 0;
+        cards.forEach((card) => {
+            const matchesQuery = !query || normalize(card.dataset.title).includes(query) || normalize(card.textContent).includes(query);
+            const matchesGenre = selectedGenre === "all" || card.dataset.genre === selectedGenre;
+            card.hidden = !(matchesQuery && matchesGenre);
+            if (!card.hidden) visible += 1;
+        });
+        [...cards].sort((a, b) => {
+            if (sort.value === "title") return a.dataset.title.localeCompare(b.dataset.title, "ru");
+            const direction = sort.value === "year-desc" ? -1 : 1;
+            return direction * (Number(a.dataset.year) - Number(b.dataset.year));
+        }).forEach((card) => grid.append(card));
+        if (status) status.textContent = `Показано ${visible} из ${cards.length}`;
+        if (empty) empty.hidden = visible !== 0;
+    };
+
+    form.addEventListener("input", update);
+    form.addEventListener("change", update);
+    form.addEventListener("reset", () => window.setTimeout(update, 0));
+    update();
+    if (window.location.hash) {
+        const target = document.getElementById(window.location.hash.slice(1));
+        if (target && target.matches("[data-work-card]")) window.setTimeout(() => target.scrollIntoView({ block: "center" }), 0);
+    }
+}
+
+function setupEraTabs() {
+    const root = document.querySelector("[data-era-tabs]");
+    if (!root) return;
+    const tabs = [...root.querySelectorAll("[data-era-tab]")];
+    const panels = [...root.querySelectorAll("[data-era-panel]")];
+    const select = (tab, focus = false) => {
+        tabs.forEach((item) => {
+            const active = item === tab;
+            item.setAttribute("aria-selected", String(active));
+            item.tabIndex = active ? 0 : -1;
+        });
+        panels.forEach((panel) => { panel.hidden = panel.dataset.eraPanel !== tab.dataset.eraTab; });
+        if (focus) tab.focus();
+    };
+    tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => select(tab));
+        tab.addEventListener("keydown", (event) => {
+            let next = null;
+            if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (index + 1) % tabs.length;
+            if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = (index - 1 + tabs.length) % tabs.length;
+            if (event.key === "Home") next = 0;
+            if (event.key === "End") next = tabs.length - 1;
+            if (next === null) return;
+            event.preventDefault();
+            select(tabs[next], true);
         });
     });
+}
 
-    printBtn?.addEventListener("click", () => {
-        window.print();
+function setupGallery() {
+    const dialog = document.querySelector("[data-gallery-dialog]");
+    if (!dialog || typeof dialog.showModal !== "function") return;
+    const image = dialog.querySelector("[data-dialog-image]");
+    const title = dialog.querySelector("[data-dialog-title]");
+    const description = dialog.querySelector("[data-dialog-description]");
+    const close = dialog.querySelector("[data-dialog-close]");
+    let trigger = null;
+    document.querySelectorAll("[data-gallery-item]").forEach((button) => {
+        button.addEventListener("click", () => {
+            trigger = button;
+            image.src = button.dataset.full;
+            image.alt = button.dataset.title;
+            title.textContent = button.dataset.title;
+            description.textContent = button.dataset.description;
+            dialog.showModal();
+        });
+    });
+    close.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+        const bounds = dialog.getBoundingClientRect();
+        const inside = event.clientX >= bounds.left && event.clientX <= bounds.right && event.clientY >= bounds.top && event.clientY <= bounds.bottom;
+        if (!inside) dialog.close();
+    });
+    dialog.addEventListener("close", () => { if (trigger) trigger.focus(); });
+}
+
+function setupQuiz() {
+    const root = document.querySelector("[data-quiz]");
+    if (!root) return;
+    const step = root.querySelector("[data-quiz-step]");
+    const scoreText = root.querySelector("[data-quiz-score]");
+    const progress = root.querySelector("[data-quiz-progress]");
+    const progressBar = root.querySelector("[data-quiz-progress-bar]");
+    const question = root.querySelector("[data-quiz-question]");
+    const options = root.querySelector("[data-quiz-options]");
+    const feedback = root.querySelector("[data-quiz-feedback]");
+    const next = root.querySelector("[data-quiz-next]");
+    const restart = root.querySelector("[data-quiz-restart]");
+    let index = 0;
+    let score = 0;
+    let answered = false;
+
+    const answer = (selected) => {
+        if (answered) return;
+        answered = true;
+        const item = QUIZ[index];
+        if (selected === item.answer) score += 1;
+        [...options.children].forEach((button, optionIndex) => {
+            button.disabled = true;
+            if (optionIndex === item.answer) button.dataset.state = "correct";
+            else if (optionIndex === selected) button.dataset.state = "wrong";
+        });
+        scoreText.textContent = `Верных ответов: ${score}`;
+        feedback.textContent = `${selected === item.answer ? "Верно. " : "Не совсем. "}${item.explanation}`;
+        next.disabled = false;
+        next.focus();
+    };
+
+    const render = (moveFocus = false) => {
+        const item = QUIZ[index];
+        answered = false;
+        step.textContent = `Вопрос ${index + 1} из ${QUIZ.length}`;
+        scoreText.textContent = `Верных ответов: ${score}`;
+        progress.setAttribute("aria-valuenow", String(index + 1));
+        progressBar.style.width = `${(index + 1) / QUIZ.length * 100}%`;
+        question.textContent = item.question;
+        feedback.textContent = "";
+        next.disabled = true;
+        next.textContent = index === QUIZ.length - 1 ? "Показать результат" : "Следующий вопрос";
+        options.replaceChildren();
+        item.options.forEach((label, optionIndex) => {
+            const button = document.createElement("button");
+            button.className = "quiz-option";
+            button.type = "button";
+            button.textContent = label;
+            button.addEventListener("click", () => answer(optionIndex));
+            options.append(button);
+        });
+        if (moveFocus) question.focus();
+    };
+
+    const finish = () => {
+        step.textContent = "Маршрут завершён";
+        scoreText.textContent = `Результат: ${score} из ${QUIZ.length}`;
+        progress.setAttribute("aria-valuenow", String(QUIZ.length));
+        progressBar.style.width = "100%";
+        question.textContent = score === QUIZ.length ? "Отлично: все ответы верны" : `Вы ответили верно на ${score} из ${QUIZ.length}`;
+        options.replaceChildren();
+        feedback.textContent = score >= 4 ? "Вы уверенно ориентируетесь в биографии и музыке Рахманинова." : "Вернитесь к биографии и каталогу, а затем попробуйте ещё раз.";
+        next.hidden = true;
+        restart.hidden = false;
+        question.focus();
+    };
+
+    next.addEventListener("click", () => {
+        if (!answered) return;
+        if (index === QUIZ.length - 1) finish();
+        else {
+            index += 1;
+            render(true);
+        }
+    });
+    restart.addEventListener("click", () => {
+        index = 0;
+        score = 0;
+        next.hidden = false;
+        restart.hidden = true;
+        render(true);
+    });
+    render();
+}
+
+function setupRoute() {
+    if (!document.querySelector("[data-route-list]")) return;
+    document.querySelector("[data-clear-route]").addEventListener("click", () => {
+        if (!window.confirm("Очистить весь слушательский маршрут?")) return;
+        setFavorites([]);
+        const status = document.querySelector("[data-route-status]");
+        if (status) status.textContent = "Маршрут очищен.";
+    });
+    document.querySelector("[data-print-route]").addEventListener("click", () => window.print());
+    renderRoute();
+}
+
+function renderRoute() {
+    const list = document.querySelector("[data-route-list]");
+    if (!list) return;
+    const empty = document.querySelector("[data-route-empty]");
+    const clear = document.querySelector("[data-clear-route]");
+    const countLarge = document.querySelector("[data-route-count-large]");
+    const countLabel = document.querySelector("[data-route-count-label]");
+    const favorites = getFavorites();
+    list.replaceChildren();
+
+    favorites.forEach((id, index) => {
+        const work = WORKS.find((item) => item.id === id);
+        if (!work) return;
+        const item = document.createElement("li");
+        item.className = "route-item";
+        const number = document.createElement("span");
+        number.className = "route-item-index";
+        number.textContent = String(index + 1).padStart(2, "0");
+        const copy = document.createElement("div");
+        const heading = document.createElement("h3");
+        heading.textContent = work.title;
+        const meta = document.createElement("p");
+        meta.textContent = `${work.year} · ${work.genre} · ${work.opus}`;
+        copy.append(heading, meta);
+        const actions = document.createElement("div");
+        actions.className = "route-item-actions";
+        const open = document.createElement("a");
+        open.href = `works.html#${work.id}`;
+        open.textContent = "→";
+        open.setAttribute("aria-label", `Открыть карточку: ${work.title}`);
+        const remove = document.createElement("button");
+        remove.className = "route-remove";
+        remove.type = "button";
+        remove.textContent = "×";
+        remove.setAttribute("aria-label", `Удалить из маршрута: ${work.title}`);
+        remove.addEventListener("click", () => {
+            setFavorites(getFavorites().filter((favorite) => favorite !== work.id));
+            const status = document.querySelector("[data-route-status]");
+            if (status) status.textContent = `${work.title} удалено из маршрута.`;
+        });
+        actions.append(open, remove);
+        item.append(number, copy, actions);
+        list.append(item);
     });
 
-    deleteBtn?.addEventListener("click", () => {
-        localStorage.removeItem(CLUB_STORAGE_KEY);
-        setupMembershipBadge();
-        window.location.reload();
-    });
-}
-
-/* ---------- EXPORT PNG ---------- */
-function exportMemberCardAsPNG({ memberId, name, email, tier, date }) {
-    const scale = 2;
-    const width = 980;
-    const height = 560;
-
-    const canvas = document.createElement("canvas");
-    canvas.width = width * scale;
-    canvas.height = height * scale;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    ctx.scale(scale, scale);
-
-    const bg = ctx.createLinearGradient(0, 0, width, height);
-    bg.addColorStop(0, "#121826");
-    bg.addColorStop(1, "#1c2230");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, width, height);
-
-    ctx.fillStyle = "rgba(196,154,63,0.18)";
-    ctx.beginPath();
-    ctx.arc(140, 110, 180, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = "rgba(105,143,211,0.16)";
-    ctx.beginPath();
-    ctx.arc(860, 520, 220, 0, Math.PI * 2);
-    ctx.fill();
-
-    roundRect(ctx, 40, 40, width - 80, height - 80, 20);
-    ctx.fillStyle = "rgba(255,255,255,0.06)";
-    ctx.fill();
-
-    ctx.strokeStyle = "rgba(255,255,255,0.14)";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    ctx.fillStyle = "#f5f5f5";
-    ctx.font = "700 30px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText("Клуб слушателей Рахманинова", 90, 110);
-
-    ctx.fillStyle = "rgba(245,245,245,0.75)";
-    ctx.font = "500 18px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText("Учебная карточка участника (localStorage demo)", 90, 140);
-
-    ctx.fillStyle = "#f5f5f5";
-    ctx.font = "800 22px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText(memberId, width - 290, 110);
-
-    const leftX = 90;
-    let y = 210;
-
-    drawField(ctx, leftX, y, "Имя", name); y += 70;
-    drawField(ctx, leftX, y, "Email", email); y += 70;
-    drawField(ctx, leftX, y, "Уровень", tier); y += 70;
-    drawField(ctx, leftX, y, "Дата", date);
-
-    ctx.fillStyle = "rgba(245,245,245,0.65)";
-    ctx.font = "500 14px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText("150 лет С.В. Рахманинову • Клиентская часть (HTML/CSS/JS)", 90, height - 90);
-
-    const a = document.createElement("a");
-    a.href = canvas.toDataURL("image/png");
-    a.download = `Rachmaninov_Club_${memberId}.png`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-}
-
-function drawField(ctx, x, y, label, value) {
-    ctx.fillStyle = "rgba(245,245,245,0.70)";
-    ctx.font = "700 14px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText(label.toUpperCase(), x, y);
-
-    ctx.fillStyle = "#f5f5f5";
-    ctx.font = "700 22px system-ui, -apple-system, Segoe UI, sans-serif";
-    ctx.fillText(String(value), x, y + 30);
-
-    ctx.strokeStyle = "rgba(255,255,255,0.12)";
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(x, y + 46);
-    ctx.lineTo(x + 800, y + 46);
-    ctx.stroke();
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-    const radius = Math.min(r, w / 2, h / 2);
-    ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.arcTo(x + w, y, x + w, y + h, radius);
-    ctx.arcTo(x + w, y + h, x, y + h, radius);
-    ctx.arcTo(x, y + h, x, y, radius);
-    ctx.arcTo(x, y, x + w, y, radius);
-    ctx.closePath();
+    const hasItems = favorites.length > 0;
+    list.hidden = !hasItems;
+    empty.hidden = hasItems;
+    clear.hidden = !hasItems;
+    if (countLarge) countLarge.textContent = String(favorites.length);
+    if (countLabel) countLabel.innerHTML = `${pluralizeWorks(favorites.length)}<br>в маршруте`;
 }
