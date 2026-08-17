@@ -1,126 +1,38 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!doctype html>
+<html lang="ru" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <title>Профиль участника — 150 лет С.В. Рахманинову</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Профиль участника клуба слушателей Рахманинова. Демонстрация клиентской логики: localStorage, экспорт карточки.">
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Мой маршрут — Рахманинов 150</title>
+    <meta name="description" content="Персональный маршрут по десяти произведениям Сергея Рахманинова: сохранённые карточки и последовательность прослушивания.">
+    <meta name="theme-color" content="#f3eee3"><meta property="og:locale" content="ru_RU"><meta property="og:type" content="website">
+    <meta property="og:title" content="Мой маршрут по музыке Рахманинова"><meta property="og:description" content="Локальная подборка произведений без регистрации и передачи данных.">
+    <link rel="icon" type="image/png" href="img/favicon.png"><link rel="stylesheet" href="css/style.css">
+    <script>try{document.documentElement.dataset.theme=localStorage.getItem("rachmaninov-theme")||"light"}catch(_){}</script>
 </head>
-<body class="page-member" data-page="member">
-<header class="site-header">
-    <div class="container header-inner">
-        <a href="index.html" class="logo">
-            <span class="logo-mark">R</span>
-            <span class="logo-text">150 лет С.В. Рахманинову</span>
-        </a>
+<body data-page="member">
+<a class="skip-link" href="#main-content">Перейти к основному содержанию</a>
+<header class="site-header" data-site-header><div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Рахманинов 150 — главная страница"><span class="brand-mark" aria-hidden="true">СР</span><span class="brand-copy"><strong>Рахманинов 150</strong><small>цифровая выставка</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span><span data-menu-label>Меню</span></button>
+    <nav class="site-nav" id="site-navigation" aria-label="Основная навигация" data-site-nav><ul><li><a href="index.html">Главная</a></li><li><a href="biography.html">Биография</a></li><li><a href="works.html">Произведения</a></li><li><a href="media.html">Архив</a></li><li><a href="legacy.html">Наследие</a></li><li><a href="sources.html">Источники</a></li></ul></nav>
+    <div class="header-actions"><button class="theme-toggle" type="button" aria-pressed="false" data-theme-toggle><span aria-hidden="true" data-theme-icon>◐</span><span class="visually-hidden" data-theme-label>Включить тёмную тему</span></button><a class="route-link" href="member.html" aria-current="page"><span aria-hidden="true">♪</span><span>Мой маршрут</span><span class="route-count" data-favorites-count aria-label="0 произведений в маршруте">0</span></a></div>
+</div></header>
 
-        <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
-            <span class="nav-toggle-line"></span>
-            <span class="nav-toggle-line"></span>
-            <span class="nav-toggle-line"></span>
-        </button>
+<main id="main-content">
+    <header class="page-hero page-hero-route"><div class="container route-hero-grid"><div><p class="eyebrow">Личная подборка</p><h1>Мой маршрут<br>по музыке</h1><p class="page-lead">Сохраняйте произведения в каталоге и возвращайтесь к ним в удобном порядке. Регистрация не нужна: выбор остаётся только на этом устройстве.</p></div><div class="route-total" aria-live="polite"><strong data-route-count-large>0</strong><span data-route-count-label>произведений<br>в маршруте</span></div></div></header>
 
-        <nav class="main-nav" aria-label="Главная навигация">
-            <ul class="nav-list" id="navList">
-                <li><a href="index.html" class="nav-link">Главная</a></li>
-                <li><a href="biography.html" class="nav-link">Биография</a></li>
-                <li><a href="works.html" class="nav-link">Творчество</a></li>
-                <li><a href="media.html" class="nav-link">Медиа</a></li>
-                <li><a href="legacy.html" class="nav-link">Наследие</a></li>
-            </ul>
-        </nav>
-
-        <div class="header-actions">
-            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌓</button>
-            <div class="member-badge" id="memberBadge" hidden>
-                <a href="member.html" class="member-pill" id="memberPill"></a>
-            </div>
-        </div>
+    <section class="section route-section" aria-labelledby="route-title"><div class="container route-layout"><div class="route-main"><div class="section-heading split-heading"><div><p class="eyebrow">Сохранённые карточки</p><h2 id="route-title">Ваш слушательский маршрут</h2></div><div class="route-actions"><button class="button button-secondary" type="button" data-print-route>Распечатать</button><button class="button button-ghost button-danger" type="button" data-clear-route hidden>Очистить</button></div></div>
+        <p class="visually-hidden" role="status" aria-live="polite" data-route-status></p>
+        <div class="route-empty" data-route-empty><span class="ornament" aria-hidden="true">𝄻</span><h3>Маршрут пока пуст</h3><p>В каталоге нажмите «В маршрут» на карточках, которые хотите услышать или изучить позже.</p><a class="button button-primary" href="works.html">Выбрать произведения</a></div>
+        <ol class="route-list" data-route-list hidden></ol>
     </div>
-</header>
+    <aside class="route-aside"><div class="route-guide"><p class="card-kicker">Как построить прослушивание</p><h2>Три акта маршрута</h2><ol><li><span>1</span><div><strong>Узнать жест</strong><p>Начните с короткой пьесы или отдельной вариации.</p></div></li><li><span>2</span><div><strong>Услышать форму</strong><p>Перейдите к концерту или симфонии и проследите возвращение тем.</p></div></li><li><span>3</span><div><strong>Сравнить эпохи</strong><p>Поставьте рядом раннее и позднее сочинения.</p></div></li></ol></div><div class="privacy-note"><span aria-hidden="true">◎</span><div><strong>Приватность по умолчанию</strong><p>Сайт сохраняет только идентификаторы выбранных произведений в памяти браузера. Имя, почта и другие персональные данные не запрашиваются.</p></div></div></aside>
+    </div></section>
 
-<main>
-    <section class="section section-page-header">
-        <div class="container">
-            <h1 class="page-title">Профиль участника клуба</h1>
-            <p class="page-subtitle">
-                Данные берутся из localStorage, можно скачать карточку (PNG) или распечатать (PDF).
-            </p>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container member-layout">
-            <div class="member-panel">
-                <div class="member-state" id="memberState"></div>
-
-                <div class="member-actions" id="memberActions" hidden>
-                    <button class="btn btn-primary" id="downloadCardBtn">Скачать карточку (PNG)</button>
-                    <button class="btn btn-outline" id="printCardBtn">Печать / PDF</button>
-                    <a class="btn btn-outline" href="legacy.html">Изменить данные (в клубе)</a>
-                    <button class="btn btn-outline" id="deleteMemberBtn">Удалить данные</button>
-                </div>
-            </div>
-
-            <div class="member-preview-wrap">
-                <div class="member-preview" id="memberPreview" hidden>
-                    <div class="club-card" id="clubCard">
-                        <div class="club-card-top">
-                            <div class="club-card-title">
-                                <div class="club-card-badge">R</div>
-                                <div>
-                                    <div class="club-card-name">Клуб слушателей Рахманинова</div>
-                                    <div class="club-card-sub">Учебная карточка участника</div>
-                                </div>
-                            </div>
-                            <div class="club-card-id" id="profileId"></div>
-                        </div>
-
-                        <div class="club-card-body">
-                            <div class="club-row">
-                                <span class="club-label">Имя</span>
-                                <span class="club-value" id="profileName"></span>
-                            </div>
-                            <div class="club-row">
-                                <span class="club-label">Email</span>
-                                <span class="club-value" id="profileEmail"></span>
-                            </div>
-                            <div class="club-row">
-                                <span class="club-label">Уровень</span>
-                                <span class="club-value" id="profileTier"></span>
-                            </div>
-                            <div class="club-row">
-                                <span class="club-label">Дата</span>
-                                <span class="club-value" id="profileDate"></span>
-                            </div>
-                        </div>
-
-                        <div class="club-card-footer">
-                            <span>150 лет С.В. Рахманинову</span>
-                            <span>localStorage • demo</span>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="member-hint-2">
-                    Примечание: экспорт PNG создаётся клиентским JavaScript (canvas).
-                </p>
-            </div>
-        </div>
-    </section>
+    <section class="section route-suggestion" aria-labelledby="suggestion-title"><div class="container"><div class="section-heading"><p class="eyebrow">Готовая последовательность</p><h2 id="suggestion-title">Если не знаете, с чего начать</h2></div><div class="suggestion-line"><a href="works.html#prelude"><span>01</span><strong>Прелюдия до-диез минор</strong><small>7–9 минут</small></a><i aria-hidden="true">→</i><a href="works.html#concerto-2"><span>02</span><strong>Второй концерт</strong><small>около 35 минут</small></a><i aria-hidden="true">→</i><a href="works.html#symphonic-dances"><span>03</span><strong>Симфонические танцы</strong><small>около 35 минут</small></a></div></div></section>
 </main>
 
-<footer class="site-footer">
-    <div class="container footer-inner">
-        <p>© 2025. Учебный интернет-ресурс к 150-летию С.В. Рахманинова.</p>
-        <p class="footer-meta">
-            Клиентская часть. HTML5, CSS3, JavaScript. Разработано в рамках курсового проектирования студентом Лапшин Мстислав
-        </p>
-    </div>
-</footer>
-
-<button id="scrollTopBtn" class="scroll-top" aria-label="Прокрутить наверх">↑</button>
-<script src="js/script.js"></script>
+<footer class="site-footer"><div class="container footer-grid"><div><a class="brand brand-footer" href="index.html"><span class="brand-mark" aria-hidden="true">СР</span><span class="brand-copy"><strong>Рахманинов 150</strong><small>цифровая выставка</small></span></a><p>Учебный культурно-просветительский проект к 150-летию со дня рождения С. В. Рахманинова (1873–2023).</p></div><nav aria-label="Навигация в подвале"><a href="biography.html">Биография</a><a href="works.html">Произведения</a><a href="media.html">Архив</a><a href="sources.html">Источники</a></nav><div class="footer-meta"><p>HTML5 · CSS3 · JavaScript</p><p>Последнее обновление: 2026</p></div></div></footer>
+<button class="scroll-top" type="button" aria-label="Вернуться к началу страницы" data-scroll-top>↑</button><script src="js/script.js" defer></script>
 </body>
 </html>

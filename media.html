@@ -1,109 +1,88 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!doctype html>
+<html lang="ru" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <title>Медиа — 150 лет С.В. Рахманинову</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Медиа-материалы, связанные с С.В. Рахманиновым: афиши, рукописи, концерты.">
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Архив Рахманинова — цифровая выставка</title>
+    <meta name="description" content="Архивная галерея цифровой выставки: портреты, фотография за роялем, рукописный документ, концертный зал и современная афиша.">
+    <meta name="theme-color" content="#f3eee3"><meta property="og:locale" content="ru_RU"><meta property="og:type" content="website">
+    <meta property="og:title" content="Архив Рахманинова"><meta property="og:description" content="Пять визуальных документов и открытая информация об их атрибуции.">
+    <link rel="icon" type="image/png" href="img/favicon.png"><link rel="stylesheet" href="css/style.css">
+    <script>try{document.documentElement.dataset.theme=localStorage.getItem("rachmaninov-theme")||"light"}catch(_){}</script>
 </head>
-<body class="page-media" data-page="media">
-<header class="site-header">
-    <div class="container header-inner">
-        <a href="index.html" class="logo">
-            <span class="logo-mark">R</span>
-            <span class="logo-text">150 лет С.В. Рахманинову</span>
-        </a>
+<body data-page="media">
+<a class="skip-link" href="#main-content">Перейти к основному содержанию</a>
+<header class="site-header" data-site-header><div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Рахманинов 150 — главная страница"><span class="brand-mark" aria-hidden="true">СР</span><span class="brand-copy"><strong>Рахманинов 150</strong><small>цифровая выставка</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span><span data-menu-label>Меню</span></button>
+    <nav class="site-nav" id="site-navigation" aria-label="Основная навигация" data-site-nav><ul><li><a href="index.html">Главная</a></li><li><a href="biography.html">Биография</a></li><li><a href="works.html">Произведения</a></li><li><a href="media.html" aria-current="page">Архив</a></li><li><a href="legacy.html">Наследие</a></li><li><a href="sources.html">Источники</a></li></ul></nav>
+    <div class="header-actions"><button class="theme-toggle" type="button" aria-pressed="false" data-theme-toggle><span aria-hidden="true" data-theme-icon>◐</span><span class="visually-hidden" data-theme-label>Включить тёмную тему</span></button><a class="route-link" href="member.html"><span aria-hidden="true">♪</span><span>Мой маршрут</span><span class="route-count" data-favorites-count aria-label="0 произведений в маршруте">0</span></a></div>
+</div></header>
 
-        <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
-            <span class="nav-toggle-line"></span>
-            <span class="nav-toggle-line"></span>
-            <span class="nav-toggle-line"></span>
-        </button>
+<main id="main-content">
+    <header class="page-hero page-hero-media"><div class="container page-hero-grid"><div><p class="eyebrow">Визуальный архив</p><h1>Документ,<br>образ, контекст</h1><p class="page-lead">Архивная фотография ценна не только изображением. Подпись, автор, дата, место хранения и лицензия определяют, что именно мы можем утверждать и как материал можно публиковать.</p></div><aside class="curator-note"><p class="card-kicker">Открытая атрибуция</p><p>В исходной медиапапке не сохранились полные метаданные. Выставка прямо отмечает эту границу и не превращает предположение в факт.</p><a class="text-link" href="sources.html#media-credits">Таблица медиакредитов <span aria-hidden="true">→</span></a></aside></div></header>
 
-        <nav class="main-nav" aria-label="Главная навигация">
-            <ul class="nav-list" id="navList">
-                <li><a href="index.html" class="nav-link">Главная</a></li>
-                <li><a href="biography.html" class="nav-link">Биография</a></li>
-                <li><a href="works.html" class="nav-link">Творчество</a></li>
-                <li><a href="media.html" class="nav-link active">Медиа</a></li>
-                <li><a href="legacy.html" class="nav-link">Наследие</a></li>
-            </ul>
-        </nav>
-
-        <div class="header-actions">
-            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌓</button>
-            <div class="member-badge" id="memberBadge" hidden>
-                <a href="member.html" class="member-pill" id="memberPill"></a>
-            </div>
-        </div>
-    </div>
-</header>
-
-<main>
-    <section class="section section-page-header">
+    <section class="section archive-section" aria-labelledby="archive-title">
         <div class="container">
-            <h1 class="page-title">Медиа-материалы</h1>
-            <p class="page-subtitle">Нажми на изображение, чтобы открыть его в модальном окне.</p>
-        </div>
-    </section>
+            <div class="section-heading split-heading"><div><p class="eyebrow">Пять единиц хранения</p><h2 id="archive-title">Локальная медиаколлекция</h2></div><p>Откройте карточку, чтобы рассмотреть изображение и прочитать полную подпись.</p></div>
 
-    <section class="section">
-        <div class="container">
-            <div class="gallery-grid" data-role="gallery">
-                <figure class="gallery-item">
-                    <img src="img/concert-hall.jpg" alt="Концертный зал" data-full="img/concert-hall.jpg">
-                    <figcaption>Концертный зал, где исполнялись произведения Рахманинова</figcaption>
+            <div class="archive-grid" data-gallery>
+                <figure class="archive-item archive-item-featured">
+                    <button type="button" class="archive-open" data-gallery-item data-full="img/rachmaninov-portrait.png" data-title="Портрет Сергея Рахманинова" data-description="Цветная репродукция портрета первой половины XX века. В исходной папке отсутствуют имя фотографа и сведения о колоризации; перед публичным распространением требуется уточнить происхождение копии." aria-describedby="archive-caption-portrait">
+                        <img src="img/rachmaninov-portrait-hero.jpg" width="760" height="923" loading="lazy" decoding="async" alt="Сергей Рахманинов, цветной портрет">
+                        <span class="archive-zoom" aria-hidden="true">Рассмотреть ↗</span>
+                    </button>
+                    <figcaption id="archive-caption-portrait"><span class="archive-type">Портрет</span><strong>Сергей Рахманинов</strong><span>Первая половина XX века · атрибуция уточняется</span></figcaption>
                 </figure>
 
-                <figure class="gallery-item">
-                    <img src="img/piano-concerto.jpg" alt="Фортепиано" data-full="img/piano-concerto.jpg">
-                    <figcaption>Фортепиано как символ его исполнительской и композиторской жизни</figcaption>
+                <figure class="archive-item">
+                    <button type="button" class="archive-open" data-gallery-item data-full="img/piano-concerto.jpg" data-title="Сергей Рахманинов за роялем" data-description="Фотография Рахманинова за роялем с подписью ателье Mishkin, New York. Локальная копия не содержит архивного номера, поэтому датировка в выставке не уточняется." aria-describedby="archive-caption-piano">
+                        <img src="img/thumbs/piano-concerto-thumb.jpg" width="640" height="817" loading="lazy" decoding="async" alt="Сергей Рахманинов сидит за роялем">
+                        <span class="archive-zoom" aria-hidden="true">Рассмотреть ↗</span>
+                    </button>
+                    <figcaption id="archive-caption-piano"><span class="archive-type">Фотография</span><strong>Рахманинов за роялем</strong><span>Mishkin, New York · архивный номер не указан</span></figcaption>
                 </figure>
 
-                <figure class="gallery-item">
-                    <img src="img/manuscripts.jpg" alt="Рукописи" data-full="img/manuscripts.jpg">
-                    <figcaption>Рукописные ноты и наброски</figcaption>
+                <figure class="archive-item">
+                    <button type="button" class="archive-open" data-gallery-item data-full="img/manuscripts.jpg" data-title="Рукописный документ с нотным фрагментом" data-description="Лист с рукописным текстом, нотным примером и подписью С. В. Рахманинова. По одной цифровой копии нельзя уверенно определить адресата и происхождение документа." aria-describedby="archive-caption-manuscript">
+                        <img src="img/thumbs/manuscripts-thumb.jpg" width="640" height="774" loading="lazy" decoding="async" alt="Рукописный лист с текстом и нотным фрагментом">
+                        <span class="archive-zoom" aria-hidden="true">Рассмотреть ↗</span>
+                    </button>
+                    <figcaption id="archive-caption-manuscript"><span class="archive-type">Рукопись</span><strong>Текст и нотный фрагмент</strong><span>Подпись С. В. Рахманинова · происхождение уточняется</span></figcaption>
                 </figure>
 
-                <figure class="gallery-item">
-                    <img src="img/poster-anniversary.jpg" alt="Юбилейный плакат" data-full="img/poster-anniversary.jpg">
-                    <figcaption>Современная афиша к юбилею композитора</figcaption>
+                <figure class="archive-item archive-item-wide">
+                    <button type="button" class="archive-open" data-gallery-item data-full="img/concert-hall.jpg" data-title="Интерьер концертного зала" data-description="Интерьер исторического зала с двумя роялями. Название площадки и автор фотографии не указаны в метаданных исходного файла, поэтому подпись ограничена тем, что видно на изображении." aria-describedby="archive-caption-hall">
+                        <img src="img/thumbs/concert-hall-thumb.jpg" width="640" height="427" loading="lazy" decoding="async" alt="Светлый исторический концертный зал с двумя роялями">
+                        <span class="archive-zoom" aria-hidden="true">Рассмотреть ↗</span>
+                    </button>
+                    <figcaption id="archive-caption-hall"><span class="archive-type">Место исполнения</span><strong>Концертный зал</strong><span>Название и автор фотографии не указаны</span></figcaption>
+                </figure>
+
+                <figure class="archive-item">
+                    <button type="button" class="archive-open" data-gallery-item data-full="img/poster-anniversary.jpg" data-title="Афиша современного концерта" data-description="Афиша концерта № 3 абонемента «Классика на все времена» Государственной филармонии Республики Алтай. На изображении нет указания на 150-летний юбилей, поэтому оно представлено как пример современной концертной памяти, а не как юбилейная афиша." aria-describedby="archive-caption-poster">
+                        <img src="img/thumbs/poster-anniversary-thumb.jpg" width="480" height="646" loading="lazy" decoding="async" alt="Афиша концерта «Великие имена. Сергей Рахманинов»">
+                        <span class="archive-zoom" aria-hidden="true">Рассмотреть ↗</span>
+                    </button>
+                    <figcaption id="archive-caption-poster"><span class="archive-type">Современная рецепция</span><strong>«Великие имена»</strong><span>Концертная афиша · связь с юбилеем не заявлена</span></figcaption>
                 </figure>
             </div>
         </div>
     </section>
 
-    <section class="section section-note">
-        <div class="container">
-            <h2>Совет</h2>
-            <p>
-                Смотрите и запоминайте, ведь перед вами величайший композитор!
-            </p>
-        </div>
-    </section>
+    <section class="section archive-method" aria-labelledby="archive-method-title"><div class="container"><div class="section-heading"><p class="eyebrow">Архивная грамотность</p><h2 id="archive-method-title">Три вопроса к изображению</h2></div><div class="method-grid"><article><span>01</span><h3>Что мы видим?</h3><p>Сначала фиксируются наблюдаемые детали: персона, подпись, пространство, надписи и физическое состояние документа.</p></article><article><span>02</span><h3>Что нам известно?</h3><p>Дата, автор, место хранения и архивный номер должны подтверждаться каталогом, а не угадываться по внешнему виду.</p></article><article><span>03</span><h3>Что разрешено?</h3><p>Общественное достояние произведения не означает, что любая цифровая репродукция или современная фотография свободна.</p></article></div></div></section>
+
+    <section class="section next-route"><div class="container next-route-inner"><p class="eyebrow">Продолжить маршрут</p><h2>От документа — к живой памяти</h2><p>Посмотрите, какие музеи, консерватории и концертные площадки участвовали в юбилейном 2023 году.</p><a class="button button-primary" href="legacy.html">Открыть раздел «Наследие»</a></div></section>
 </main>
 
-<footer class="site-footer">
-    <div class="container footer-inner">
-        <p>© 2025. Учебный интернет-ресурс к 150-летию С.В. Рахманинова.</p>
-        <p class="footer-meta">
-            Клиентская часть. HTML5, CSS3, JavaScript. Разработано в рамках курсового проектирования студентом Лапшин Мстислав
-        </p>
+<dialog class="archive-dialog" id="archive-dialog" aria-labelledby="archive-dialog-title" data-gallery-dialog>
+    <div class="dialog-inner">
+        <button class="dialog-close" type="button" aria-label="Закрыть изображение" data-dialog-close>×</button>
+        <div class="dialog-image-wrap"><img src="img/rachmaninov-portrait-hero.jpg" alt="" id="archive-dialog-image" data-dialog-image></div>
+        <div class="dialog-copy"><p class="eyebrow">Архивная карточка</p><h2 id="archive-dialog-title" data-dialog-title>Изображение</h2><p data-dialog-description></p><a class="text-link" href="sources.html#media-credits">Медиакредиты <span aria-hidden="true">→</span></a></div>
     </div>
-</footer>
+</dialog>
 
-<div class="modal" id="imageModal" aria-hidden="true">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Просмотр изображения">
-        <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
-        <img src="" alt="" id="modalImage">
-        <p id="modalCaption" class="modal-caption"></p>
-    </div>
-</div>
-
-<button id="scrollTopBtn" class="scroll-top" aria-label="Прокрутить наверх">↑</button>
-<script src="js/script.js"></script>
+<footer class="site-footer"><div class="container footer-grid"><div><a class="brand brand-footer" href="index.html"><span class="brand-mark" aria-hidden="true">СР</span><span class="brand-copy"><strong>Рахманинов 150</strong><small>цифровая выставка</small></span></a><p>Учебный культурно-просветительский проект к 150-летию со дня рождения С. В. Рахманинова (1873–2023).</p></div><nav aria-label="Навигация в подвале"><a href="biography.html">Биография</a><a href="works.html">Произведения</a><a href="media.html">Архив</a><a href="sources.html">Источники</a></nav><div class="footer-meta"><p>HTML5 · CSS3 · JavaScript</p><p>Последнее обновление: 2026</p></div></div></footer>
+<button class="scroll-top" type="button" aria-label="Вернуться к началу страницы" data-scroll-top>↑</button><script src="js/script.js" defer></script>
 </body>
 </html>
-

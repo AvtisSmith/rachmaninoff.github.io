@@ -1,190 +1,166 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!doctype html>
+<html lang="ru" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <title>Биография — 150 лет С.В. Рахманинову</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Биография Сергея Васильевича Рахманинова: основные этапы жизни, творчества и эмиграции.">
+    <title>Биография Сергея Рахманинова — Рахманинов 150</title>
+    <meta name="description" content="Документальная биография Сергея Рахманинова: учёба, творческий кризис, дирижирование, эмиграция и поздние произведения.">
+    <meta name="theme-color" content="#f3eee3">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Биография Сергея Рахманинова">
+    <meta property="og:description" content="Пять периодов жизни и двенадцать документально подтверждённых дат.">
+    <link rel="icon" type="image/png" href="img/favicon.png">
     <link rel="stylesheet" href="css/style.css">
+    <script>try{document.documentElement.dataset.theme=localStorage.getItem("rachmaninov-theme")||"light"}catch(_){}</script>
 </head>
-<body class="page-biography" data-page="biography">
-<header class="site-header">
+<body data-page="biography">
+<a class="skip-link" href="#main-content">Перейти к основному содержанию</a>
+<header class="site-header" data-site-header>
     <div class="container header-inner">
-        <a href="index.html" class="logo">
-            <span class="logo-mark">R</span>
-            <span class="logo-text">150 лет С.В. Рахманинову</span>
-        </a>
-
-        <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
-            <span class="nav-toggle-line"></span>
-            <span class="nav-toggle-line"></span>
-            <span class="nav-toggle-line"></span>
-        </button>
-
-        <nav class="main-nav" aria-label="Главная навигация">
-            <ul class="nav-list" id="navList">
-                <li><a href="index.html" class="nav-link">Главная</a></li>
-                <li><a href="biography.html" class="nav-link active">Биография</a></li>
-                <li><a href="works.html" class="nav-link">Творчество</a></li>
-                <li><a href="media.html" class="nav-link">Медиа</a></li>
-                <li><a href="legacy.html" class="nav-link">Наследие</a></li>
-            </ul>
+        <a class="brand" href="index.html" aria-label="Рахманинов 150 — главная страница"><span class="brand-mark" aria-hidden="true">СР</span><span class="brand-copy"><strong>Рахманинов 150</strong><small>цифровая выставка</small></span></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span><span data-menu-label>Меню</span></button>
+        <nav class="site-nav" id="site-navigation" aria-label="Основная навигация" data-site-nav>
+            <ul><li><a href="index.html">Главная</a></li><li><a href="biography.html" aria-current="page">Биография</a></li><li><a href="works.html">Произведения</a></li><li><a href="media.html">Архив</a></li><li><a href="legacy.html">Наследие</a></li><li><a href="sources.html">Источники</a></li></ul>
         </nav>
-
         <div class="header-actions">
-            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">🌓</button>
-            <div class="member-badge" id="memberBadge" hidden>
-                <a href="member.html" class="member-pill" id="memberPill"></a>
-            </div>
+            <button class="theme-toggle" type="button" aria-pressed="false" data-theme-toggle><span aria-hidden="true" data-theme-icon>◐</span><span class="visually-hidden" data-theme-label>Включить тёмную тему</span></button>
+            <a class="route-link" href="member.html"><span aria-hidden="true">♪</span><span>Мой маршрут</span><span class="route-count" data-favorites-count aria-label="0 произведений в маршруте">0</span></a>
         </div>
     </div>
 </header>
 
-<main>
-    <section class="section section-page-header">
+<main id="main-content">
+    <header class="page-hero page-hero-biography">
+        <div class="container page-hero-grid">
+            <div>
+                <p class="eyebrow">Биография · 1873–1943</p>
+                <h1>Жизнь между сценой<br>и партитурой</h1>
+                <p class="page-lead">Рахманинов прожил семь десятилетий, в которых сменились империи, границы и музыкальные языки. Пять периодов ниже показывают, как композиторская работа была связана с исполнительством, дирижированием и вынужденным отъездом.</p>
+            </div>
+            <aside class="curator-note" aria-label="Примечание куратора">
+                <p class="card-kicker">Принцип точности</p>
+                <p>Источники расходятся в названии усадьбы, где родился Рахманинов. Поэтому здесь используется подтверждённая формула: <strong>Новгородская губерния</strong>.</p>
+                <a class="text-link" href="sources.html#note-birthplace">Почему есть расхождение <span aria-hidden="true">→</span></a>
+            </aside>
+        </div>
+    </header>
+
+    <section class="section era-section" aria-labelledby="eras-title">
         <div class="container">
-            <h1 class="page-title">Биография Сергея Рахманинова</h1>
-            <p class="page-subtitle">
-                Пролистай ниже и кликай по пунктам справа — увидишь, как работает навигация по якорям.
-            </p>
+            <div class="section-heading">
+                <p class="eyebrow">Пять периодов</p>
+                <h2 id="eras-title">Биография крупным планом</h2>
+            </div>
+
+            <div class="era-tabs" data-era-tabs>
+                <div class="tab-list" role="tablist" aria-label="Периоды жизни Рахманинова">
+                    <button type="button" role="tab" id="tab-early" aria-controls="panel-early" aria-selected="true" tabindex="0" data-era-tab="early"><span>01</span> 1873–1892</button>
+                    <button type="button" role="tab" id="tab-crisis" aria-controls="panel-crisis" aria-selected="false" tabindex="-1" data-era-tab="crisis"><span>02</span> 1893–1901</button>
+                    <button type="button" role="tab" id="tab-moscow" aria-controls="panel-moscow" aria-selected="false" tabindex="-1" data-era-tab="moscow"><span>03</span> 1902–1917</button>
+                    <button type="button" role="tab" id="tab-emigration" aria-controls="panel-emigration" aria-selected="false" tabindex="-1" data-era-tab="emigration"><span>04</span> 1917–1931</button>
+                    <button type="button" role="tab" id="tab-late" aria-controls="panel-late" aria-selected="false" tabindex="-1" data-era-tab="late"><span>05</span> 1932–1943</button>
+                </div>
+
+                <article class="era-panel" role="tabpanel" id="panel-early" aria-labelledby="tab-early" tabindex="0" data-era-panel="early">
+                    <div class="era-date" aria-hidden="true">1873<br>—1892</div>
+                    <div class="era-copy">
+                        <p class="card-kicker">Новгород · Петербург · Москва</p>
+                        <h3>Учёба и ранняя самостоятельность</h3>
+                        <p>Сергей Васильевич Рахманинов родился 20 марта по старому стилю — 1 апреля по новому — 1873 года в Новгородской губернии. В 1882 году он поступил в Санкт-Петербургскую консерваторию, а в 1885-м перевёлся в Московскую.</p>
+                        <p>В Москве его подготовкой занимался Николай Зверев; позднее Рахманинов учился у Александра Зилоти, Антона Аренского и Сергея Танеева. Эта школа соединяла строгую композиционную дисциплину с высокой пианистической культурой.</p>
+                        <p>В 1891 году он окончил консерваторию как пианист, в 1892-м — как композитор. Дипломная одноактная опера «Алеко» была написана в необычайно короткий срок и принесла Большую золотую медаль.</p>
+                        <p class="panel-source"><a href="sources.html#source-bre">Большая российская энциклопедия [1]</a> · <a href="sources.html#source-culture">Культура.РФ [3]</a></p>
+                    </div>
+                </article>
+
+                <article class="era-panel" role="tabpanel" id="panel-crisis" aria-labelledby="tab-crisis" tabindex="0" data-era-panel="crisis" hidden>
+                    <div class="era-date" aria-hidden="true">1893<br>—1901</div>
+                    <div class="era-copy">
+                        <p class="card-kicker">Известность · кризис · возвращение</p>
+                        <h3>От прелюдии до Второго концерта</h3>
+                        <p>Прелюдия до-диез минор, созданная в 1892 году, быстро стала одним из самых узнаваемых сочинений молодого автора. Но премьера Первой симфонии в 1897 году получила тяжёлый приём критики.</p>
+                        <p>Последовавший почти трёхлетний перерыв в сочинении музыки был не отказом от профессии: Рахманинов продолжал выступать и дирижировать. Истории о «пьяном дирижёре» и чудесном «лечении гипнозом» не следует подавать как доказанные факты.</p>
+                        <p>В 1901 году впервые полностью прозвучал Второй фортепианный концерт. Его успех вернул композитору уверенность и обозначил зрелый язык: протяжённую мелодику, плотную фактуру и крупное симфоническое развитие.</p>
+                        <p class="panel-source"><a href="sources.html#source-bre">БРЭ [1]</a> · <a href="sources.html#note-symphony">Комментарий к Первой симфонии</a></p>
+                    </div>
+                </article>
+
+                <article class="era-panel" role="tabpanel" id="panel-moscow" aria-labelledby="tab-moscow" tabindex="0" data-era-panel="moscow" hidden>
+                    <div class="era-date" aria-hidden="true">1902<br>—1917</div>
+                    <div class="era-copy">
+                        <p class="card-kicker">Москва · Дрезден · Нью-Йорк</p>
+                        <h3>Композитор, дирижёр, концертирующий пианист</h3>
+                        <p>В 1904–1906 годах Рахманинов был дирижёром Большого театра. Он работал прежде всего с русским репертуаром и добивался ансамблевой точности, внимания к певцам и драматургической цельности спектакля.</p>
+                        <p>В этот период появились Вторая симфония, Третий фортепианный концерт, поэма «Колокола» и «Всенощное бдение». Третий концерт был создан для первых гастролей в США и впервые исполнен в Нью-Йорке в 1909 году.</p>
+                        <p>В 1913 году Рахманинов завершил «Колокола» на текст Эдгара По в переводе Константина Бальмонта, а в 1915-м — хоровой цикл «Всенощное бдение», одну из вершин русской духовной музыкальной традиции.</p>
+                        <p class="panel-source"><a href="sources.html#source-mosconsv">Московская консерватория [4]</a> · <a href="sources.html#source-network">Rachmaninoff Network [5]</a></p>
+                    </div>
+                </article>
+
+                <article class="era-panel" role="tabpanel" id="panel-emigration" aria-labelledby="tab-emigration" tabindex="0" data-era-panel="emigration" hidden>
+                    <div class="era-date" aria-hidden="true">1917<br>—1931</div>
+                    <div class="era-copy">
+                        <p class="card-kicker">Скандинавия · США</p>
+                        <h3>Отъезд и новая профессиональная жизнь</h3>
+                        <p>В декабре 1917 года Рахманинов покинул Россию с семьёй. Сначала он жил и выступал в Скандинавии; в конце 1918 года семья обосновалась в Соединённых Штатах.</p>
+                        <p>Формула «эмигрировал в Америку в 1917 году» неточна: она смешивает отъезд из России и переезд в США. В новой жизни концертная деятельность стала основным источником дохода и заняла большую часть времени.</p>
+                        <p>Рахманинов приобрёл международную славу как пианист и оставил собственные записи. Композиторская работа стала реже, но поздние сочинения показывают не угасание, а более сжатый и оркестрово насыщенный язык.</p>
+                        <p class="panel-source"><a href="sources.html#source-bre">БРЭ [1]</a> · <a href="sources.html#source-loc">Архив Библиотеки Конгресса [2]</a></p>
+                    </div>
+                </article>
+
+                <article class="era-panel" role="tabpanel" id="panel-late" aria-labelledby="tab-late" tabindex="0" data-era-panel="late" hidden>
+                    <div class="era-date" aria-hidden="true">1932<br>—1943</div>
+                    <div class="era-copy">
+                        <p class="card-kicker">Сенар · Европа · Калифорния</p>
+                        <h3>Поздний стиль и последние концерты</h3>
+                        <p>С 1932 года семья проводила летние месяцы на вилле Сенар близ Люцерна. Здесь были созданы Рапсодия на тему Паганини и Третья симфония; европейский дом позволял композитору вновь сосредоточиться на работе.</p>
+                        <p>В 1940 году Рахманинов завершил «Симфонические танцы» — последнее крупное сочинение. В нём соединены память о прежних произведениях, мотив средневековой секвенции Dies irae и предельно прозрачное оркестровое письмо.</p>
+                        <p>Последний концерт состоялся 17 февраля 1943 года. Рахманинов умер 28 марта в Беверли-Хиллз и был похоронен на кладбище Кенсико в штате Нью-Йорк.</p>
+                        <p class="panel-source"><a href="sources.html#source-loc">Архив Библиотеки Конгресса [2]</a> · <a href="sources.html#source-network">Каталог произведений [5]</a></p>
+                    </div>
+                </article>
+            </div>
         </div>
     </section>
 
-    <section class="section section-two-columns">
-        <div class="container two-columns">
-            <article class="column-main">
-                <h2 id="childhood">Детство и первые занятия музыкой</h2>
-                <p>
-                    Сергей Васильевич Рахманинов родился 1 апреля 1873 года. В детстве он рано проявил музыкальные способности:
-                    отличал интервалы на слух, запоминал мелодии и легко повторял их на фортепиано.
-                </p>
-                <p>
-                    Важную роль сыграла домашняя среда и первые педагоги: занятия формировали не только технику, но и привычку к
-                    дисциплине. Даже в ранние годы у Рахманинова просматривается стремление к цельному музыкальному “рассказу” —
-                    к тому, чтобы мелодия не была отдельной фразой, а развивалась как сюжет.
-                </p>
-                <p>
-                    Переезды и семейные обстоятельства усложняли обучение, но именно в этот период возникает главная черта будущего
-                    мастера: сочетание эмоциональности с точным контролем формы.
-                </p>
+    <section class="section chronology-section" id="chronology" aria-labelledby="chronology-title">
+        <div class="container chronology-layout">
+            <div class="section-heading chronology-heading">
+                <p class="eyebrow">Документальный каркас</p>
+                <h2 id="chronology-title">Двенадцать опорных дат</h2>
+                <p>Краткая шкала помогает увидеть, как произведения, поездки и исполнительская карьера складываются в одну биографию.</p>
+            </div>
+            <ol class="chronology-list">
+                <li><time datetime="1873-04-01">1873</time><div><h3>Рождение</h3><p>20 марта (1 апреля) в Новгородской губернии.</p></div></li>
+                <li><time datetime="1882">1882</time><div><h3>Петербург</h3><p>Начало учёбы в Санкт-Петербургской консерватории.</p></div></li>
+                <li><time datetime="1885">1885</time><div><h3>Москва</h3><p>Перевод в Московскую консерваторию.</p></div></li>
+                <li><time datetime="1892">1892</time><div><h3>«Алеко»</h3><p>Окончание курса композиции и Большая золотая медаль.</p></div></li>
+                <li><time datetime="1897">1897</time><div><h3>Первая симфония</h3><p>Неудачная премьера и начало творческого перерыва.</p></div></li>
+                <li><time datetime="1901">1901</time><div><h3>Второй концерт</h3><p>Первое полное исполнение и широкое признание.</p></div></li>
+                <li><time datetime="1904">1904–1906</time><div><h3>Большой театр</h3><p>Работа дирижёром московской оперной сцены.</p></div></li>
+                <li><time datetime="1909">1909</time><div><h3>Америка</h3><p>Третий концерт и первые гастроли в США.</p></div></li>
+                <li><time datetime="1917-12">1917</time><div><h3>Отъезд</h3><p>Рахманинов с семьёй покидает Россию.</p></div></li>
+                <li><time datetime="1918">1918</time><div><h3>Нью-Йорк</h3><p>Начало жизни в Соединённых Штатах.</p></div></li>
+                <li><time datetime="1940">1940</time><div><h3>«Симфонические танцы»</h3><p>Завершение последнего крупного сочинения.</p></div></li>
+                <li><time datetime="1943-03-28">1943</time><div><h3>Последний год</h3><p>Последний концерт 17 февраля; смерть 28 марта.</p></div></li>
+            </ol>
+        </div>
+    </section>
 
-                <h2 id="study">Учёба: Петербург и Москва</h2>
-                <p>
-                    Музыкальное образование Рахманинов получал сначала в Петербурге, а затем продолжил в Москве.
-                    Переход был важен: в Москве он оказался в более подходящей среде, где формировался вкус, круг чтения и профессиональные связи.
-                </p>
-                <p>
-                    Учёба включала гармонию, полифонию, инструментовку и анализ форм. Это заметно в зрелых сочинениях: даже очень
-                    “романтические” темы у него всегда выстроены конструктивно — есть опоры, кульминации, разгрузки.
-                </p>
-
-                <h2 id="first-success">Первые успехи и признание</h2>
-                <p>
-                    Окончив консерваторию, композитор быстро привлёк внимание музыкальной общественности. Ранние произведения
-                    и выступления закрепили репутацию Рахманинова как яркого пианиста и автора с индивидуальным стилем.
-                </p>
-                <p>
-                    Его музыку отмечали за “широкое дыхание” мелодии и глубину эмоционального содержания. При этом для самого
-                    Рахманинова было важно, чтобы впечатление не держалось на одном эффекте: он стремился к цельности — чтобы слушатель
-                    чувствовал развитие и внутреннюю логику.
-                </p>
-
-                <h2 id="crisis">Кризис и возвращение к большим формам</h2>
-                <p>
-                    В творческой биографии был период, когда внешние обстоятельства и критические отзывы болезненно воспринимались
-                    автором. Но именно преодоление такого кризиса стало точкой роста: позднее появляются сочинения, в которых
-                    слышен опыт борьбы и внутреннего восстановления.
-                </p>
-                <p>
-                    В это время он заново выстраивает уверенность в себе как композиторе: усиливается драматургия, яснее слышна
-                    структура, а мелодии получают ещё более “певучий” характер.
-                </p>
-
-                <h2 id="conducting">Дирижирование и концертная практика</h2>
-                <p>
-                    Рахманинов был не только композитором, но и дирижёром. Эта практика усилила его чувство оркестра:
-                    понимание тембров, баланса и того, как музыка звучит в зале, а не только на бумаге.
-                </p>
-                <p>
-                    Концертная жизнь требовала огромной выносливости и точности. Параллельное существование “сцены” и “письменного стола”
-                    отразилось в стиле: фортепианная партия у него часто “оркестровая” по плотности и эффекту.
-                </p>
-
-                <h2 id="emigration">Эмиграция: новая реальность</h2>
-                <p>
-                    После событий 1917 года Рахманинов покидает Россию. Начинается жизнь в новой культурной среде:
-                    выступления, гастроли, записи. Эмиграция стала эмоционально сложным периодом — тема “дома” и утраты
-                    ощущается как подтекст многих поздних сочинений.
-                </p>
-                <p>
-                    При этом международная известность усиливается: концерты собирают публику, а имя становится символом
-                    высочайшего пианистического уровня.
-                </p>
-
-                <h2 id="late-style">Поздний стиль: сдержанность и глубина</h2>
-                <p>
-                    В поздних произведениях часто слышна более строгая интонация: меньше внешней “роскоши” и больше внутренней
-                    сосредоточенности. Темы могут быть короче, но драматургия — плотнее.
-                </p>
-                <p>
-                    Это не “сухость”, а скорее зрелая концентрация: когда каждый поворот гармонии и фактуры работает на общий смысл.
-                </p>
-
-                <h2 id="last-years">Последние годы</h2>
-                <p>
-                    Последние годы жизни Рахманинов проводит в США. Он продолжает выступать, оставаясь одним из самых известных
-                    пианистов своего времени. Композитор умирает в 1943 году, а его музыка остаётся частью мирового концертного репертуара.
-                </p>
-                <p>
-                    Его наследие живёт в интерпретациях, записях, учебных программах и в постоянном присутствии на сцене —
-                    от крупных симфонических залов до камерных концертов.
-                </p>
-            </article>
-
-            <aside class="column-aside">
-                <div class="sticky-box">
-                    <h3>Навигация по биографии</h3>
-                    <ul class="local-nav">
-                        <li><a href="#childhood">Детство</a></li>
-                        <li><a href="#study">Учёба</a></li>
-                        <li><a href="#first-success">Первые успехи</a></li>
-                        <li><a href="#crisis">Кризис</a></li>
-                        <li><a href="#conducting">Дирижирование</a></li>
-                        <li><a href="#emigration">Эмиграция</a></li>
-                        <li><a href="#late-style">Поздний стиль</a></li>
-                        <li><a href="#last-years">Последние годы</a></li>
-                    </ul>
-
-                    <div class="fact-card">
-                        <h4>Интересный факт</h4>
-                        <p>
-                            Рахманинов славился уникальной “оркестровой” фактурой в фортепианной партии —
-                            это связано с его опытом дирижирования и ощущением звучания в зале.
-                        </p>
-                    </div>
-
-                    <div class="small-highlight">
-                        <p class="small-label">Далее</p>
-                        <p>После биографии попробуй фильтр произведений и викторину.</p>
-                        <a href="works.html" class="link-button">Творчество</a>
-                        <a href="legacy.html" class="link-button">Наследие</a>
-                    </div>
-                </div>
-            </aside>
+    <section class="section next-route">
+        <div class="container next-route-inner">
+            <p class="eyebrow">Продолжить маршрут</p>
+            <h2>Услышать биографию в музыке</h2>
+            <p>Каталог связывает каждую эпоху с произведением и предлагает ориентиры для первого прослушивания.</p>
+            <a class="button button-primary" href="works.html">Перейти к произведениям</a>
         </div>
     </section>
 </main>
 
-<footer class="site-footer">
-    <div class="container footer-inner">
-        <p>© 2025. Учебный интернет-ресурс к 150-летию С.В. Рахманинова.</p>
-        <p class="footer-meta">
-            Клиентская часть. HTML5, CSS3, JavaScript. Разработано в рамках курсового проектирования студентом Лапшин Мстислав
-        </p>
-    </div>
-</footer>
-
-<button id="scrollTopBtn" class="scroll-top" aria-label="Прокрутить наверх">↑</button>
-<script src="js/script.js"></script>
+<footer class="site-footer"><div class="container footer-grid"><div><a class="brand brand-footer" href="index.html"><span class="brand-mark" aria-hidden="true">СР</span><span class="brand-copy"><strong>Рахманинов 150</strong><small>цифровая выставка</small></span></a><p>Учебный культурно-просветительский проект к 150-летию со дня рождения С. В. Рахманинова (1873–2023).</p></div><nav aria-label="Навигация в подвале"><a href="biography.html">Биография</a><a href="works.html">Произведения</a><a href="media.html">Архив</a><a href="sources.html">Источники</a></nav><div class="footer-meta"><p>HTML5 · CSS3 · JavaScript</p><p>Последнее обновление: 2026</p></div></div></footer>
+<button class="scroll-top" type="button" aria-label="Вернуться к началу страницы" data-scroll-top>↑</button>
+<script src="js/script.js" defer></script>
 </body>
 </html>

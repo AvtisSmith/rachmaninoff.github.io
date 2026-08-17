@@ -1,0 +1,15 @@
+{
+  "name": "rachmaninov-150-digital-exhibition",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Многостраничная цифровая выставка к 150-летию С. В. Рахманинова",
+  "scripts": {
+    "serve": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check js/script.js && node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
